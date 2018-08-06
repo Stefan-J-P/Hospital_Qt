@@ -6,11 +6,12 @@
 void doctor_repository::add_doctor(const doctor& d)
 {
     QString sql = "insert into doctor "
-                  "(name, specialization) "
-                  "values (:name, :specialization);";
+                  "(name, surname, specialization) "
+                  "values (:name, :surname, :specialization);";
     QSqlQuery query;
     query.prepare(sql);
     query.bindValue(":name", d.get_name());
+    query.bindValue(":surname", d.get_surname());
     query.bindValue(":specialization", d.get_specialization());
 
     if (query.exec()) {
@@ -30,6 +31,7 @@ void doctor_repository::update_doctor(const doctor& d)
     QSqlQuery query;
     query.prepare(sql);
     query.bindValue(":name", d.get_name());
+    query.bindValue(":surname", d.get_surname());
     query.bindValue(":specialization", d.get_specialization());
     query.bindValue(":id", d.get_id());
 
@@ -61,7 +63,7 @@ void doctor_repository::delete_doctor(const int id)
 QVector<doctor> doctor_repository::find_all_doctors()
 {
     QVector<doctor> doctors;
-    QString sql = "select id, name, specialization from doctor";
+    QString sql = "select id, name, surname, specialization from doctor";
     QSqlQuery query;
     query.exec(sql);
 
@@ -69,7 +71,8 @@ QVector<doctor> doctor_repository::find_all_doctors()
         doctors.push_back(doctor{
             query.value(0).toInt(),
             query.value(1).toString(),
-            query.value(2).toString()
+            query.value(2).toString(),
+            query.value(3).toString()
         });
     }
     return doctors;
@@ -78,7 +81,7 @@ QVector<doctor> doctor_repository::find_all_doctors()
 // FIND ONE DOCTOR BY ID -------------------------------------------------------------
 boost::optional<doctor> doctor_repository::find_one_doctor_by_id(const int id)
 {
-    QString sql = "select id, name, specialization from doctor where id = :id";
+    QString sql = "select id, name, surname, specialization from doctor where id = :id";
     QSqlQuery query;
     query.prepare(sql);
     query.bindValue(":id", id);
@@ -89,7 +92,8 @@ boost::optional<doctor> doctor_repository::find_one_doctor_by_id(const int id)
             doctor{
             query.value(0).toInt(),
             query.value(1).toString(),
-            query.value(2).toString()
+            query.value(2).toString(),
+            query.value(3).toString()
             }
             };
         }

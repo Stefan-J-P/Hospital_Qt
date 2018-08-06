@@ -11,15 +11,15 @@ private:
     sql_connection();
     static sql_connection* instance;
 
-    // dane potrzebne do polaczenia z mysql
+    // data requierd to connect with database
     const QString HOST_NAME;
     const QString DATABASE_NAME;
     const QString USERNAME;
     const QString PASSWORD;
 
-    // obiekt laczacy sie z baza danych
+    // object which connect with database
     QSqlDatabase db;
-    // tworzenie tabel
+
     void create_tables();
 public:
     static sql_connection* get_instance();

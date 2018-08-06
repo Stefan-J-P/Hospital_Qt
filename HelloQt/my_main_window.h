@@ -1,10 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <my_libs.h>
-#include <panel_doctor.h>
-#include <panel_patient.h>
-#include <panel_visit.h>
+#include "my_libs.h"
+#include "panel_doctor.h"
+#include "panel_patient.h"
+#include "panel_visit.h"
+#include "panel_statistics.h"
 
 
 class my_main_window : public QMainWindow

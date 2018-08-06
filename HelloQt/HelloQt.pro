@@ -26,7 +26,8 @@ SOURCES +=\
     visit_repository.cpp \
     _MAIN.cpp \
     panel_patient.cpp \
-    panel_visit.cpp
+    panel_visit.cpp \
+    panel_statistics.cpp
 
 HEADERS  += \
     panel_doctor.h \
@@ -41,6 +42,7 @@ HEADERS  += \
     patient_repository.h \
     visit_repository.h \
     panel_patient.h \
-    panel_visit.h
+    panel_visit.h \
+    panel_statistics.h
 
 FORMS    += mainwindow.ui

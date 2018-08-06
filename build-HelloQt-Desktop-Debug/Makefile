@@ -60,10 +60,12 @@ SOURCES       = ../HelloQt/panel_doctor.cpp \
 		../HelloQt/visit_repository.cpp \
 		../HelloQt/_MAIN.cpp \
 		../HelloQt/panel_patient.cpp \
-		../HelloQt/panel_visit.cpp moc_panel_doctor.cpp \
+		../HelloQt/panel_visit.cpp \
+		../HelloQt/panel_statistics.cpp moc_panel_doctor.cpp \
 		moc_my_main_window.cpp \
 		moc_panel_patient.cpp \
-		moc_panel_visit.cpp
+		moc_panel_visit.cpp \
+		moc_panel_statistics.cpp
 OBJECTS       = panel_doctor.o \
 		my_main_window.o \
 		sql_connection.o \
@@ -77,10 +79,12 @@ OBJECTS       = panel_doctor.o \
 		_MAIN.o \
 		panel_patient.o \
 		panel_visit.o \
+		panel_statistics.o \
 		moc_panel_doctor.o \
 		moc_my_main_window.o \
 		moc_panel_patient.o \
-		moc_panel_visit.o
+		moc_panel_visit.o \
+		moc_panel_statistics.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -150,7 +154,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../HelloQt/patient_repository.h \
 		../HelloQt/visit_repository.h \
 		../HelloQt/panel_patient.h \
-		../HelloQt/panel_visit.h ../HelloQt/panel_doctor.cpp \
+		../HelloQt/panel_visit.h \
+		../HelloQt/panel_statistics.h ../HelloQt/panel_doctor.cpp \
 		../HelloQt/my_main_window.cpp \
 		../HelloQt/sql_connection.cpp \
 		../HelloQt/my_exception.cpp \
@@ -162,7 +167,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../HelloQt/visit_repository.cpp \
 		../HelloQt/_MAIN.cpp \
 		../HelloQt/panel_patient.cpp \
-		../HelloQt/panel_visit.cpp
+		../HelloQt/panel_visit.cpp \
+		../HelloQt/panel_statistics.cpp
 QMAKE_TARGET  = HelloQt
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = HelloQt
@@ -332,8 +338,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../HelloQt/panel_doctor.h ../HelloQt/my_main_window.h ../HelloQt/my_libs.h ../HelloQt/sql_connection.h ../HelloQt/my_exception.h ../HelloQt/doctor.h ../HelloQt/patient.h ../HelloQt/visit.h ../HelloQt/doctor_repository.h ../HelloQt/patient_repository.h ../HelloQt/visit_repository.h ../HelloQt/panel_patient.h ../HelloQt/panel_visit.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../HelloQt/panel_doctor.cpp ../HelloQt/my_main_window.cpp ../HelloQt/sql_connection.cpp ../HelloQt/my_exception.cpp ../HelloQt/doctor.cpp ../HelloQt/patient.cpp ../HelloQt/visit.cpp ../HelloQt/doctor_repository.cpp ../HelloQt/patient_repository.cpp ../HelloQt/visit_repository.cpp ../HelloQt/_MAIN.cpp ../HelloQt/panel_patient.cpp ../HelloQt/panel_visit.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../HelloQt/panel_doctor.h ../HelloQt/my_main_window.h ../HelloQt/my_libs.h ../HelloQt/sql_connection.h ../HelloQt/my_exception.h ../HelloQt/doctor.h ../HelloQt/patient.h ../HelloQt/visit.h ../HelloQt/doctor_repository.h ../HelloQt/patient_repository.h ../HelloQt/visit_repository.h ../HelloQt/panel_patient.h ../HelloQt/panel_visit.h ../HelloQt/panel_statistics.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../HelloQt/panel_doctor.cpp ../HelloQt/my_main_window.cpp ../HelloQt/sql_connection.cpp ../HelloQt/my_exception.cpp ../HelloQt/doctor.cpp ../HelloQt/patient.cpp ../HelloQt/visit.cpp ../HelloQt/doctor_repository.cpp ../HelloQt/patient_repository.cpp ../HelloQt/visit_repository.cpp ../HelloQt/_MAIN.cpp ../HelloQt/panel_patient.cpp ../HelloQt/panel_visit.cpp ../HelloQt/panel_statistics.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../HelloQt/mainwindow.ui $(DISTDIR)/
 
 
@@ -357,26 +363,47 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_panel_doctor.cpp moc_my_main_window.cpp moc_panel_patient.cpp moc_panel_visit.cpp
+compiler_moc_header_make_all: moc_panel_doctor.cpp moc_my_main_window.cpp moc_panel_patient.cpp moc_panel_visit.cpp moc_panel_statistics.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_panel_doctor.cpp moc_my_main_window.cpp moc_panel_patient.cpp moc_panel_visit.cpp
+	-$(DEL_FILE) moc_panel_doctor.cpp moc_my_main_window.cpp moc_panel_patient.cpp moc_panel_visit.cpp moc_panel_statistics.cpp
 moc_panel_doctor.cpp: ../HelloQt/my_libs.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/doctor.h \
 		../HelloQt/panel_doctor.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I'/home/stefan/QtCreatorProjects/HelloQt - Doctor/HelloQt' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../HelloQt/panel_doctor.h -o moc_panel_doctor.cpp
 
 moc_my_main_window.cpp: ../HelloQt/my_libs.h \
 		../HelloQt/panel_doctor.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/doctor.h \
 		../HelloQt/panel_patient.h \
+		../HelloQt/patient_repository.h \
+		../HelloQt/patient.h \
 		../HelloQt/panel_visit.h \
+		../HelloQt/visit_repository.h \
+		../HelloQt/visit.h \
+		../HelloQt/panel_statistics.h \
 		../HelloQt/my_main_window.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I'/home/stefan/QtCreatorProjects/HelloQt - Doctor/HelloQt' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../HelloQt/my_main_window.h -o moc_my_main_window.cpp
 
 moc_panel_patient.cpp: ../HelloQt/my_libs.h \
+		../HelloQt/patient_repository.h \
+		../HelloQt/patient.h \
 		../HelloQt/panel_patient.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I'/home/stefan/QtCreatorProjects/HelloQt - Doctor/HelloQt' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../HelloQt/panel_patient.h -o moc_panel_patient.cpp
 
-moc_panel_visit.cpp: ../HelloQt/panel_visit.h
+moc_panel_visit.cpp: ../HelloQt/my_libs.h \
+		../HelloQt/visit_repository.h \
+		../HelloQt/doctor.h \
+		../HelloQt/patient.h \
+		../HelloQt/visit.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/patient_repository.h \
+		../HelloQt/panel_visit.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I'/home/stefan/QtCreatorProjects/HelloQt - Doctor/HelloQt' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../HelloQt/panel_visit.h -o moc_panel_visit.cpp
+
+moc_panel_statistics.cpp: ../HelloQt/panel_statistics.h
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I'/home/stefan/QtCreatorProjects/HelloQt - Doctor/HelloQt' -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtSql -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../HelloQt/panel_statistics.h -o moc_panel_statistics.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -397,14 +424,23 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 panel_doctor.o: ../HelloQt/panel_doctor.cpp ../HelloQt/panel_doctor.h \
-		../HelloQt/my_libs.h
+		../HelloQt/my_libs.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/doctor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o panel_doctor.o ../HelloQt/panel_doctor.cpp
 
 my_main_window.o: ../HelloQt/my_main_window.cpp ../HelloQt/my_main_window.h \
 		../HelloQt/my_libs.h \
 		../HelloQt/panel_doctor.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/doctor.h \
 		../HelloQt/panel_patient.h \
-		../HelloQt/panel_visit.h
+		../HelloQt/patient_repository.h \
+		../HelloQt/patient.h \
+		../HelloQt/panel_visit.h \
+		../HelloQt/visit_repository.h \
+		../HelloQt/visit.h \
+		../HelloQt/panel_statistics.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o my_main_window.o ../HelloQt/my_main_window.cpp
 
 sql_connection.o: ../HelloQt/sql_connection.cpp ../HelloQt/sql_connection.h \
@@ -456,24 +492,37 @@ visit_repository.o: ../HelloQt/visit_repository.cpp ../HelloQt/visit_repository.
 _MAIN.o: ../HelloQt/_MAIN.cpp ../HelloQt/my_main_window.h \
 		../HelloQt/my_libs.h \
 		../HelloQt/panel_doctor.h \
-		../HelloQt/panel_patient.h \
-		../HelloQt/panel_visit.h \
-		../HelloQt/sql_connection.h \
-		../HelloQt/my_exception.h \
 		../HelloQt/doctor_repository.h \
 		../HelloQt/doctor.h \
+		../HelloQt/panel_patient.h \
 		../HelloQt/patient_repository.h \
 		../HelloQt/patient.h \
+		../HelloQt/panel_visit.h \
 		../HelloQt/visit_repository.h \
-		../HelloQt/visit.h
+		../HelloQt/visit.h \
+		../HelloQt/panel_statistics.h \
+		../HelloQt/sql_connection.h \
+		../HelloQt/my_exception.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o _MAIN.o ../HelloQt/_MAIN.cpp
 
 panel_patient.o: ../HelloQt/panel_patient.cpp ../HelloQt/panel_patient.h \
-		../HelloQt/my_libs.h
+		../HelloQt/my_libs.h \
+		../HelloQt/patient_repository.h \
+		../HelloQt/patient.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o panel_patient.o ../HelloQt/panel_patient.cpp
 
-panel_visit.o: ../HelloQt/panel_visit.cpp ../HelloQt/panel_visit.h
+panel_visit.o: ../HelloQt/panel_visit.cpp ../HelloQt/panel_visit.h \
+		../HelloQt/my_libs.h \
+		../HelloQt/visit_repository.h \
+		../HelloQt/doctor.h \
+		../HelloQt/patient.h \
+		../HelloQt/visit.h \
+		../HelloQt/doctor_repository.h \
+		../HelloQt/patient_repository.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o panel_visit.o ../HelloQt/panel_visit.cpp
+
+panel_statistics.o: ../HelloQt/panel_statistics.cpp ../HelloQt/panel_statistics.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o panel_statistics.o ../HelloQt/panel_statistics.cpp
 
 moc_panel_doctor.o: moc_panel_doctor.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_panel_doctor.o moc_panel_doctor.cpp
@@ -486,6 +535,9 @@ moc_panel_patient.o: moc_panel_patient.cpp
 
 moc_panel_visit.o: moc_panel_visit.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_panel_visit.o moc_panel_visit.cpp
+
+moc_panel_statistics.o: moc_panel_statistics.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_panel_statistics.o moc_panel_statistics.cpp
 
 ####### Install
 

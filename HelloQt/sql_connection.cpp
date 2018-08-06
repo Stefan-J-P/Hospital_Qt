@@ -4,7 +4,7 @@
 sql_connection::sql_connection()
 : HOST_NAME("localhost"), DATABASE_NAME("stefan_db"), USERNAME("root"), PASSWORD("root")
 {
-    db = QSqlDatabase::addDatabase("QMYSQL"); // driver do polaczenia z baza danych
+    db = QSqlDatabase::addDatabase("QMYSQL"); // driver to connect with database
     db.setHostName(HOST_NAME);
     db.setDatabaseName(DATABASE_NAME);
     db.setUserName(USERNAME);
@@ -40,6 +40,7 @@ void sql_connection::create_tables()
         QString sqlDoctor = "create table if not exists doctor ( "
                             "id integer primary key auto_increment,"
                             "name varchar(50) not null,"
+                            "surname varchar(50) not null,"
                             "specialization varchar(50) not null "
                             ");";
         query.prepare(sqlDoctor);
@@ -55,6 +56,8 @@ void sql_connection::create_tables()
                               "first_name varchar(50) not null, "
                               "last_name varchar(50) not null, "
                               "age integer not null"
+                              "symptoms varchar(500) not null,"
+                              "diagnose varchar(500) not null"
                               ");";
         query.prepare(sql_patient);
         if(query.exec())
@@ -101,6 +104,7 @@ QSqlDatabase sql_connection::get_db()
 }
 
 // SETTER ---------------------------------------
-void sql_connection::close_connection() {
+void sql_connection::close_connection()
+{
     db.close();
 }

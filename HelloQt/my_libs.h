@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QDate>
 
+#include <QWidget>
 #include <QCoreApplication>
 #include <QtWidgets>
 #include <QtWidgets/QLabel>

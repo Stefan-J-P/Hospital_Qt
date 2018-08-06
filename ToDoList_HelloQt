@@ -1,0 +1,17 @@
+/*
+ * STATYSTYKI
+ *
+ * OSOBNY PANEL
+ * - w tabeli pokazac imie i nazwisko lekarza oraz ilu pacjentow dany lekarz przyjal oraz sredni koszt wizyty
+ * - u tego lekarza
+ * - w kolejnej tabeli pokazac chorobe oraz ilosc pacjentow ktorzy na nia zachorowali
+ * - w kolejnej tabeli pokazac lekarza i nazwe choroby z ktora pacjenci przychodzili do niego najczesciej
+ *
+ * OSOBNY PANEL
+ * - zrobic tabele w ktorej mamy wizyty uporzadkowane wedlug daty, dodatkowo pod albo nad panelem
+ * zrobic dwa comboboxy, jeden zawiera date od a drugi zawiera date do i mozesz po wybraniu dat
+ * wypisywa tylko te wizyty ktore sa w przedziale, wizyty powinny sie wypisywac kiedy od razu
+ * wybierzesz date, powinna byc walidacja daty czy czasem data od nie jest wieksza niz data do i wtedy
+ * message z bledem
+ *
+ */

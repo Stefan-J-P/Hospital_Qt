@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 {
 
     // -------------------------------------------------------------------
-    // ----------------- APLIKACJA KONSOLOWA -----------------------------
+    // ----------------- CONSOL APPLICATION -----------------------------
     // -------------------------------------------------------------------
     /*
     QCoreApplication app(argc, argv);
@@ -86,6 +86,8 @@ int main(int argc, char* argv[])
         vis_rep.add_visit(visit{QDateTime::currentDateTime(), 2, 3, 200});
         vis_rep.update_visit(visit{4, QDateTime::currentDateTime(), 3, 4, 170});
         vis_rep.delete_visit(4);*/
+
+
 
 
 

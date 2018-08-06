@@ -1,6 +1,7 @@
 // Created by stefan on 5/27/18.
 #include "visit_repository.h"
 #include "sql_connection.h"
+#include "my_libs.h"
 
 // ADD VISIT -----------------------------------------------------------------------
 void visit_repository::add_visit(const visit &v)
@@ -26,9 +27,12 @@ void visit_repository::add_visit(const visit &v)
     }
 }
 
-// UPDATE PATIENT ------------------------------------------------------------------
+// UPDATE VISIT ------------------------------------------------------------------
 void visit_repository::update_visit(const visit &v)
 {
+    QMessageBox* msg = new QMessageBox();
+    msg->setText(QString::number(v.get_id()) + " " + QString::number(v.get_cost()));
+    msg->show();
     QString sql = "update visit "
                   "set visit_date_time = :visit_date_time, doctor_id = :doctor_id, patient_id = :patient_id, cost = :cost "
                   "where id = :id;";
