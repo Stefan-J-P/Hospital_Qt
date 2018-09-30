@@ -36,7 +36,7 @@ void doctor_repository::update_doctor(const doctor& d)
     query.bindValue(":id", d.get_id());
 
     if (query.exec()) {
-        qDebug() << "Row with id = " << d.get_id() <<  " successfully updated!\n";
+        qDebug() << "Doctor row with id = " << d.get_id() <<  " successfully updated!\n";
     } else {
         qDebug() << sql_connection::get_instance()->get_db().lastError().text() << "\n";
         qDebug() << "Error while updating in doctor table\n";
@@ -52,7 +52,7 @@ void doctor_repository::delete_doctor(const int id)
     query.bindValue(":id", id);
 
     if (query.exec()) {
-        qDebug() << "Row with id = " << id <<  " successfully deleted!\n";
+        qDebug() << "Doctor row with id = " << id <<  " successfully deleted!\n";
     } else {
         qDebug() << sql_connection::get_instance()->get_db().lastError().text() << "\n";
         qDebug() << "Error while deleting in doctor table\n";

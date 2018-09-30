@@ -1,0 +1,33 @@
+#ifndef PANEL_TABLE_H
+#define PANEL_TABLE_H
+#include "my_libs.h"
+#include "panel_statistics.h"
+#include "doctor_how_many_patients_average_cost_of_visit.h"
+
+class panel_table : public QWidget
+{
+    Q_OBJECT
+private:
+    QTableWidget* table_;
+    QVBoxLayout* verticalLayout_;
+
+signals:
+
+public slots:
+
+
+public:
+    panel_table();
+    explicit panel_table(QWidget *parent = 0);
+    // virtual ~panel_table();
+    void fill_table();
+
+    QTableWidgetItem *cubesHeaderItem_1;
+    QTableWidgetItem *cubesHeaderItem_2;
+
+    QVBoxLayout* main_layout_;
+    QHBoxLayout* table_layout_1_;
+
+};
+
+#endif // PANEL_TABLE_H

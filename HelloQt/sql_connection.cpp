@@ -36,7 +36,7 @@ void sql_connection::create_tables()
     try {
         QSqlQuery query;
 
-        // tworzenie tabeli doctor -------------------------------------------------
+        // creating table doctor -------------------------------------------------
         QString sqlDoctor = "create table if not exists doctor ( "
                             "id integer primary key auto_increment,"
                             "name varchar(50) not null,"
@@ -50,15 +50,15 @@ void sql_connection::create_tables()
             qDebug() << "Error while creating doctor table\n";
         }
 
-        // tworzenie tabeli patient ------------------------------------------------
+        // creating tabele patient ------------------------------------------------
         QString sql_patient = "create table if not exists patient ( "
                               "id integer primary key auto_increment,"
                               "first_name varchar(50) not null, "
                               "last_name varchar(50) not null, "
-                              "age integer not null"
-                              "symptoms varchar(500) not null,"
-                              "diagnose varchar(500) not null"
-                              ");";
+                              "age integer not null,"
+                              "symptoms varchar(250) not null,"
+                              "diagnose varchar(250) not null "
+                              ");"; // ile znakow dla varchar ???
         query.prepare(sql_patient);
         if(query.exec())
         {
@@ -69,7 +69,7 @@ void sql_connection::create_tables()
             qDebug() << "Error while creating patient table\n";
         }
 
-        // tworzenie tabeli visit --------------------------------------------------
+        // creating tabele visit --------------------------------------------------
         QString sql_visit = "create table if not exists visit ( "
                             "id integer primary key auto_increment, "
                             "visit_date_time timestamp, "

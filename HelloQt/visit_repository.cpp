@@ -47,7 +47,7 @@ void visit_repository::update_visit(const visit &v)
 
     if(query.exec())
     {
-        qDebug() << "Row with id = " << v.get_id() << " successfully updated!\n";
+        qDebug() << "Visit row with id = " << v.get_id() << " successfully updated!\n";
     }
     else
     {
@@ -66,7 +66,7 @@ void visit_repository::delete_visit(const int id)
 
     if (query.exec())
     {
-        qDebug() << "Row with id = " << id << " successfully deleted!\n";
+        qDebug() << "Visit row with id = " << id << " successfully deleted!\n";
     }
     else
     {

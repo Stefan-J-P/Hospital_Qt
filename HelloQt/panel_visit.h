@@ -39,6 +39,10 @@ public slots:
     void update_visit();
     void delete_visit();
     void get_visit(const QString& idx);
+    void refresh_data();
+
+    void refresh_doc_id();
+    void refresh_pat_id();
 };
 
 #endif // PANEL_VISIT_H

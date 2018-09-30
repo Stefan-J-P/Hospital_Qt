@@ -27,7 +27,15 @@ SOURCES +=\
     _MAIN.cpp \
     panel_patient.cpp \
     panel_visit.cpp \
-    panel_statistics.cpp
+    doctor_how_many_patients_average_cost_of_visit.cpp \
+    panel_table.cpp \
+    disease_patients_number.cpp \
+    doctor_patients_common_disease.cpp \
+    panel_table_2.cpp \
+    panel_table_3.cpp \
+    panel_table_visit_by_date.cpp \
+    visits_by_date.cpp \
+    my_calendar.cpp
 
 HEADERS  += \
     panel_doctor.h \
@@ -43,6 +51,14 @@ HEADERS  += \
     visit_repository.h \
     panel_patient.h \
     panel_visit.h \
-    panel_statistics.h
+    doctor_how_many_patients_average_cost_of_visit.h \
+    panel_table.h \
+    disease_patients_number.h \
+    doctor_patients_common_disease.h \
+    panel_table_2.h \
+    panel_table_3.h \
+    panel_table_visit_by_date.h \
+    visits_by_date.h \
+    my_calendar.h
 
 FORMS    += mainwindow.ui

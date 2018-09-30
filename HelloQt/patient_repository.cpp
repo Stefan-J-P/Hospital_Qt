@@ -63,7 +63,7 @@ void patient_repository::delete_patient(const int id)
 
     if(query.exec())
     {
-        qDebug() << "Row with id = " << id << " successfully deleted!\n";
+        qDebug() << "Patient row with id = " << id << " successfully deleted!\n";
     } else
     {
         qDebug() << sql_connection::get_instance()->get_db().lastError().text() << "\n";

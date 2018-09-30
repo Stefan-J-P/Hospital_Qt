@@ -107,13 +107,20 @@ void panel_doctor::get_doctor_ids()
 
 // DESTRUCTOR ---------------------------------------------------------------------
 panel_doctor::~panel_doctor() {
-    if (doc_rep) {
-        delete doc_rep;
-    }
+//    if (doc_rep){delete doc_rep;}   // if dla kazdego obiektu ? Krotszy zapis ?
 
-    delete le_doc_id_;
-    // remember to delete objects
+//    delete le_doc_id_;
+//    delete le_name_;
+//    delete le_surname_;
+//    delete le_specialization_;
 
+//    delete pushbut_add_;
+//    delete pushbut_upd_;
+//    delete pushbut_del_;
+
+//    delete form_layout_;
+//    delete operations_layout_;
+//    delete main_layout_;
 }
 
 

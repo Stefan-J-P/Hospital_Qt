@@ -4,7 +4,7 @@ panel_visit::panel_visit(QWidget *parent) : QWidget(parent)
 {
     le_visit_id_ = new QComboBox();
     le_visit_date_time_ = new QLineEdit();
-    le_doctor_id_ = new QComboBox();
+    le_doctor_id_ = new QComboBox();    
     le_patient_id_ = new QComboBox();
     le_cost_ = new QLineEdit();
 
@@ -16,17 +16,8 @@ panel_visit::panel_visit(QWidget *parent) : QWidget(parent)
         le_visit_id_->addItem(QString::number(v.get_id()));
     }
 
-    doc_rep = new doctor_repository();
-    QVector<doctor> doctors = doc_rep->find_all_doctors();
-    for (const auto& d : doctors) {
-        le_doctor_id_->addItem(QString::number(d.get_id()));
-    }
-
-    pat_rep = new patient_repository();
-    QVector<patient> patients = pat_rep->find_all_patients();
-    for (const auto& p : patients) {
-        le_patient_id_->addItem(QString::number(p.get_id()));
-    }
+    refresh_doc_id();   // refresh output on screen
+    refresh_pat_id();
 
     pushbut_add_ = new QPushButton("ADD");
     pushbut_upd_ = new QPushButton("UPDATE");
@@ -54,17 +45,30 @@ panel_visit::panel_visit(QWidget *parent) : QWidget(parent)
     connect(pushbut_add_, SIGNAL(clicked(bool)), this, SLOT(add_visit()));
     connect(pushbut_upd_, SIGNAL(clicked(bool)), this, SLOT(update_visit()));
     connect(pushbut_del_, SIGNAL(clicked(bool)), this, SLOT(delete_visit()));
-    connect(le_visit_id_,SIGNAL(currentIndexChanged(QString)),this,SLOT(get_visit(const QString&)));
+    connect(le_visit_id_,SIGNAL(currentIndexChanged(QString)),this,SLOT(get_visit(const QString&)));   
 
 }
 
 // DESTRUCTOR ------------------------------------------------------------------
 panel_visit::~panel_visit()
 {
-    if(vis_rep)
-    {
-        delete vis_rep;
-    }
+//    if(vis_rep){delete vis_rep;}
+//    if(doc_rep){delete doc_rep;}
+//    if(pat_rep){delete pat_rep;}
+
+//    delete le_visit_id_;
+//    delete le_visit_date_time_;
+//    delete le_doctor_id_;
+//    delete le_patient_id_;
+//    delete le_cost_;
+
+//    delete pushbut_add_;
+//    delete pushbut_upd_;
+//    delete pushbut_del_;
+
+//    delete form_layout_;
+//    delete operations_layout_;
+//    delete main_layout_;
 }
 
 // GET VISIT IDS ----------------------------------------------------------------
@@ -82,7 +86,8 @@ void panel_visit::get_visit_ids()
 void panel_visit::add_visit()
 {
     QDateTime dateTime = QDateTime::fromString(le_visit_date_time_->text(), QString("yyyy-MM-dd HH:mm"));
-    vis_rep->add_visit(visit{dateTime, le_doctor_id_->currentText().toInt(), le_patient_id_->currentText().toInt(), le_cost_->text().toInt()});    
+
+    vis_rep->add_visit(visit{dateTime, le_doctor_id_->currentText().toInt(), le_patient_id_->currentText().toInt(), le_cost_->text().toInt()});
     get_visit_ids();
 
     QMessageBox* msg = new QMessageBox();
@@ -120,13 +125,56 @@ void panel_visit::get_visit(const QString &idx)
 {
     boost::optional<visit> op_vis = vis_rep->find_one_visit_by_id(idx.toInt());
 
+
+    doctor_repository doc_rep;
+    patient_repository pat_rep;
+
+
     if(op_vis)
     {
         visit vis = *op_vis;
+        doctor doc = *doc_rep.find_one_doctor_by_id(vis.get_doctor_id());
+        patient pat = *pat_rep.find_one_patient_by_id(vis.get_patient_id());
+
         le_visit_date_time_->setText(vis.get_visit_date_time().toString(QString("yyyy-MM-dd HH:mm")));
         le_cost_->setText(QString::number(vis.get_cost()));
+
         le_doctor_id_->setCurrentText(QString::number(vis.get_doctor_id()));
+        //le_doctor_id_->setCurrentText(doc.get_name() + " " + doc.get_surname());
+        //le_doctor_id_->setCurrentText(*doc_rep.find_one_doctor_by_id(vis.get_doctor_id()));
+
         le_patient_id_->setCurrentText(QString::number(vis.get_patient_id()));
+        //le_patient_id_->setCurrentText(pat.get_first_name() + " " + pat.get_last_name());
+        //le_patient_id_->setCurrentText(*pat_rep.find_one_patient_by_id(vis.get_patient_id()));
+    }
+}
+
+// REFRESH OUTPUT -------------------------------------------------------------
+void panel_visit::refresh_data()
+{
+    refresh_doc_id();
+    refresh_pat_id();
+}
+
+void panel_visit::refresh_doc_id()
+{
+    le_doctor_id_->clear();
+    QVector<doctor> doctors = doc_rep->find_all_doctors();
+    for (const auto& d : doctors)
+    {
+        le_doctor_id_->addItem(QString::number(d.get_id()));
+        //le_doctor_id_->addItem(d.get_name() + " " + d.get_surname());
+    }
+}
+
+void panel_visit::refresh_pat_id()
+{
+    le_patient_id_->clear();
+    QVector<patient> patients = pat_rep->find_all_patients();
+    for (const auto& p : patients)
+    {
+        le_patient_id_->addItem(QString::number(p.get_id()));
+        //le_patient_id_->addItem(p.get_first_name() + " " + p.get_last_name());
     }
 }
 

@@ -47,7 +47,7 @@ panel_patient::panel_patient(QWidget *parent) : QWidget(parent)
 // ADD ------------------------------------------------------------------------
 void panel_patient::add_patient()
 {   // ADD OTHER WIDGETS ---> symptoms + diagnose
-    pat_rep->add_patient(patient{le_first_name_->text(), le_last_name_->text(), le_age_->text().toInt()});
+    pat_rep->add_patient(patient{le_first_name_->text(), le_last_name_->text(), le_age_->text().toInt(), le_symptoms_->text(), le_diagnose_->text()});
     le_pat_id_->clear();
     get_patients_ids();
 
@@ -59,7 +59,7 @@ void panel_patient::add_patient()
 // UPDATE ---------------------------------------------------------------------
 void panel_patient::update_patient()
 {
-    pat_rep->update_patient(patient{le_pat_id_->currentText().toInt(), le_first_name_->text(), le_last_name_->text(), le_age_->text().toInt()});
+    pat_rep->update_patient(patient{le_pat_id_->currentText().toInt(), le_first_name_->text(), le_last_name_->text(), le_age_->text().toInt(), le_symptoms_->text(), le_diagnose_->text()});
     le_pat_id_->clear();
     get_patients_ids();
 
@@ -91,6 +91,8 @@ void panel_patient::get_patient(const QString &idx)
         le_first_name_->setText(pat.get_first_name());
         le_last_name_->setText(pat.get_last_name());
         le_age_->setText(QString::number(pat.get_age()));
+        le_symptoms_->setText(pat.get_symptoms());
+        le_diagnose_->setText(pat.get_diagnose());
     }
 }
 
@@ -108,10 +110,26 @@ void panel_patient::get_patients_ids()
 // DESTRUCTOR -----------------------------------------------------------------
 panel_patient::~panel_patient()
 {
-    if(pat_rep)
-    {
-        delete pat_rep;
-    }
+//    if(pat_rep)
+//    {
+//        delete pat_rep;
+//    }
+
+//    delete le_pat_id_;
+//    delete le_first_name_;
+//    delete le_last_name_;
+//    delete le_age_;
+//    delete le_symptoms_;
+//    delete le_diagnose_;
+
+//    delete pushbut_add_;
+//    delete pushbut_upd_;
+//    delete pushbut_del_;
+
+//    delete form_layout_;
+//    delete operations_layout_;
+//    delete main_layout_;
+
 }
 
 

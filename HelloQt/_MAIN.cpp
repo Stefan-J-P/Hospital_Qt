@@ -10,6 +10,8 @@
 #include "patient_repository.h"
 #include "visit_repository.h"
 
+#include "doctor_how_many_patients_average_cost_of_visit.h"
+
 int main(int argc, char* argv[])
 {
 
@@ -51,56 +53,17 @@ int main(int argc, char* argv[])
     return app.exec();      */
 
 
+
     QApplication a(argc, argv);
     sql_connection* db = sql_connection::get_instance();
     my_main_window my_window_;
     my_window_.show();
 
+
+
+
     return a.exec();
 
 }
-
-
-
-
-
-
-
-/*        doc_rep.add_doctor(doctor{"MAREK", "GINEKOLOG"});
-        doc_rep.add_doctor(doctor{"TOMASZ", "ANESTEZJOLOG"});
-        doc_rep.add_doctor(doctor{"ZYGMUNT", "CHIRURG"});
-        doc_rep.add_doctor(doctor{"HALINA", "ONKOLOG"});
-        doc_rep.update_doctor(doctor{4, "ZOFIA", "DERMATOLOG"});
-        doc_rep.delete_doctor(4);   */
-
-/*        pat_rep.add_patient(patient{"ZYGMUNT", "HAJZER", 66});
-        pat_rep.add_patient(patient{"MATEUSZ", "OJCIEC", 45});
-        pat_rep.add_patient(patient{"JAROSLAW", "KACZYNSKI", 68});
-        pat_rep.add_patient(patient{"BEATA", "SZYDLO", 55});
-        pat_rep.update_patient(patient{4, "TINA", "TURNER", 75});
-        pat_rep.delete_patient(4);*/
-
-/*        vis_rep.add_visit(visit{QDateTime::currentDateTime(), 3, 3, 150});
-        vis_rep.add_visit(visit{QDateTime::currentDateTime(), 1, 2, 320});
-        vis_rep.add_visit(visit{QDateTime::currentDateTime(), 3, 2, 150});
-        vis_rep.add_visit(visit{QDateTime::currentDateTime(), 2, 3, 200});
-        vis_rep.update_visit(visit{4, QDateTime::currentDateTime(), 3, 4, 170});
-        vis_rep.delete_visit(4);*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

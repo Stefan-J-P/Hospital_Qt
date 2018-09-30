@@ -6,6 +6,9 @@
 #include <QString>
 #include <QVector>
 #include <QDate>
+#include <QPair>
+#include <QObject>
+
 
 #include <QWidget>
 #include <QCoreApplication>
@@ -23,6 +26,10 @@
 #include <QMenu>
 #include <QAction>
 #include <QComboBox>
+#include <QTableWidget>
+#include <QWidget>
+#include <QTableWidgetItem>
+#include <QCalendarWidget>
 
 #include <QWidget>
 #include <QLineEdit>

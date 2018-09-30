@@ -3,10 +3,10 @@
 #include "patient.h"
 
 // CONSTRUCTORS -----------------------------------------------------------------------
-patient::patient(const QString &first_name, const QString &last_name, const int age, const QString &symptoms, const QSrting &diagnose)
+patient::patient(const QString &first_name, const QString &last_name, const int age, const QString &symptoms, const QString &diagnose)
 : first_name(first_name), last_name(last_name), age_(age), symptoms_(symptoms), diagnose_(diagnose) {}
 
-patient::patient(const int id, const QString &first_name, const QString &last_name, const int age, const QString &symptoms, const QSrting &diagnose)
+patient::patient(const int id, const QString &first_name, const QString &last_name, const int age, const QString &symptoms, const QString &diagnose)
 : id_(id), first_name(first_name), last_name(last_name), age_(age), symptoms_(symptoms), diagnose_(diagnose) {}
 
 // GETTERS ---------------------------------------------------------------------------
