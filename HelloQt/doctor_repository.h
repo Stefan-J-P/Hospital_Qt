@@ -13,5 +13,7 @@ public:
     void delete_doctor(const int id);
     QVector<doctor> find_all_doctors();
     boost::optional<doctor> find_one_doctor_by_id(const int id);
+
+    boost::optional<doctor> get_doctor_id_by_name_surname_spec(const QString& name, const QString& surname, const QString& spec);
 };
 #endif //HELLOQT_DOCTOR_REPOSITORY_H

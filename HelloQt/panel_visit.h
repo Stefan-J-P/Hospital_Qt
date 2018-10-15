@@ -6,6 +6,8 @@
 #include "doctor_repository.h"
 #include "patient_repository.h"
 #include "visit.h"
+#include "doctor.h"
+#include "patient.h"
 
 class panel_visit : public QWidget
 {
@@ -17,6 +19,7 @@ private:
     QComboBox* le_visit_id_;
     QLineEdit* le_visit_date_time_;
     QComboBox* le_doctor_id_;
+    QLineEdit* le_doctor_name_;
     QComboBox* le_patient_id_;
     QLineEdit* le_cost_;
 
@@ -27,6 +30,7 @@ private:
     QVBoxLayout* main_layout_;
     QFormLayout* form_layout_;
     QHBoxLayout* operations_layout_;
+    QHBoxLayout* doctor_id_layout_;
 
     doctor_repository* doc_rep;
     patient_repository* pat_rep;
@@ -39,6 +43,9 @@ public slots:
     void update_visit();
     void delete_visit();
     void get_visit(const QString& idx);
+    int get_doctor_id(const QString& d);
+    int get_patient_id(const QString& p);
+
     void refresh_data();
 
     void refresh_doc_id();

@@ -19,6 +19,7 @@ public:
     patient()= default;
     patient(const QString& first_name, const QString& last_name, const int age, const QString& symptoms, const QString& diagnose);
     patient(const int id, const QString& first_name, const QString& last_name, const int age, const QString& symptoms, const QString& diagnose);
+    patient(const int id, const QString& first_name, const QString& last_name, const int age);
 
     // GETTERS
     int get_id() const;

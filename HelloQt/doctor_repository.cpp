@@ -86,16 +86,17 @@ boost::optional<doctor> doctor_repository::find_one_doctor_by_id(const int id)
     query.prepare(sql);
     query.bindValue(":id", id);
 
-    if (query.exec()) {
-        if (query.next()) {
+    if (query.exec())
+    {
+        if (query.next())
+        {
             return boost::optional<doctor>{
             doctor{
             query.value(0).toInt(),
             query.value(1).toString(),
             query.value(2).toString(),
             query.value(3).toString()
-            }
-            };
+            }};
         }
     } else {
         qDebug() << "Error while selecting one doctor from table\n";
@@ -103,4 +104,34 @@ boost::optional<doctor> doctor_repository::find_one_doctor_by_id(const int id)
 
 
     return boost::optional<doctor>{};
-};
+}
+
+// GET DOCTOR ID ----------------------------------------------------------------------
+boost::optional<doctor> doctor_repository::get_doctor_id_by_name_surname_spec(const QString &name, const QString &surname, const QString &spec)
+{
+    QString sql = "select id, name, surname, specialization from doctor where name = :name and surname = :surname and specialization = :spec";
+    QSqlQuery query;
+    query.prepare(sql);
+    query.bindValue(":name", name);
+    query.bindValue(":surname", surname);
+    query.bindValue(":spec", spec);
+
+    if(query.exec())
+    {
+        if(query.next())
+        {
+            return boost::optional<doctor>{
+            doctor{
+            query.value(0).toInt(),
+            query.value(1).toString(),
+            query.value(2).toString(),
+            query.value(3).toString()
+            }};
+        }
+    }
+    else
+    {
+        qDebug() << "Error while selecting one doctor from table\n";
+    }
+    return boost::optional<doctor>{};
+}

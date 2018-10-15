@@ -30,6 +30,9 @@
 #include <QWidget>
 #include <QTableWidgetItem>
 #include <QCalendarWidget>
+#include <QRegularExpression>
+#include <QStringList>
+#include <QTextStream>
 
 #include <QWidget>
 #include <QLineEdit>
@@ -54,6 +57,7 @@
 #include <sstream>
 #include <regex>
 #include <exception>
+#include <vector>
 
 #endif // MY_LIBS
 

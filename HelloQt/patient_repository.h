@@ -14,5 +14,6 @@ public:
 
     QVector<patient> find_all_patients();
     boost::optional<patient> find_one_patient_by_id(const int id);
+    boost::optional<patient> get_patient_id_by_name_surname_age(const QString& name, const QString& surname, const int age/*, const QString& sympt, const QString& diag*/);
 };
 #endif //HELLOQT_PATIENT_REPOSITORY_H

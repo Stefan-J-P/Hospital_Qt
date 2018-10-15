@@ -8,7 +8,11 @@ panel_visit::panel_visit(QWidget *parent) : QWidget(parent)
     le_patient_id_ = new QComboBox();
     le_cost_ = new QLineEdit();
 
-    //get_visit_ids();
+    //le_doctor_name_ = new QLineEdit();
+    //doctor_id_layout_ = new QHBoxLayout();
+    //doctor_id_layout_->addWidget(le_doctor_id_);
+    //doctor_id_layout_->addWidget(le_doctor_name_);
+    //le_doctor_id_->view()->setMaximumWidth(5);
 
     vis_rep = new visit_repository();
     QVector<visit> visits = vis_rep->find_all_visits();
@@ -41,11 +45,15 @@ panel_visit::panel_visit(QWidget *parent) : QWidget(parent)
 
     setLayout(main_layout_);
 
+    doc_rep = new doctor_repository();
+
     // buttons connection
     connect(pushbut_add_, SIGNAL(clicked(bool)), this, SLOT(add_visit()));
     connect(pushbut_upd_, SIGNAL(clicked(bool)), this, SLOT(update_visit()));
     connect(pushbut_del_, SIGNAL(clicked(bool)), this, SLOT(delete_visit()));
-    connect(le_visit_id_,SIGNAL(currentIndexChanged(QString)),this,SLOT(get_visit(const QString&)));   
+    //connect(le_visit_id_,SIGNAL(currentIndexChanged(QString)),this,SLOT(get_visit(const QString&)));
+    //connect(le_doctor_id_, SIGNAL(currentTextChanged(QString)), this, SLOT(get_doctor_id(const QString&)));
+    //connect(le_patient_id_, SIGNAL(currentTextChanged(QString)), this, SLOT(get_patient_id(const QString&)));
 
 }
 
@@ -87,12 +95,28 @@ void panel_visit::add_visit()
 {
     QDateTime dateTime = QDateTime::fromString(le_visit_date_time_->text(), QString("yyyy-MM-dd HH:mm"));
 
-    vis_rep->add_visit(visit{dateTime, le_doctor_id_->currentText().toInt(), le_patient_id_->currentText().toInt(), le_cost_->text().toInt()});
-    get_visit_ids();
+    QMessageBox* msg1 = new QMessageBox();
+    msg1->setText(dateTime.toString() + " " + QString::number(le_doctor_id_->currentText().toInt()) + " " + QString::number(le_patient_id_->currentText().toInt()));
+    msg1->show();
 
+    int doctor_id = get_doctor_id(le_doctor_id_->currentText());
     QMessageBox* msg = new QMessageBox();
-    msg->setText("NEW ROW IN VISIT TABLE ADDED SUCCESSFULLY");
+    msg->setText("ID = " + QString::number(doctor_id));
     msg->show();
+
+    int patient_id = get_patient_id(le_patient_id_->currentText());
+    QMessageBox* msg33 = new QMessageBox();
+    msg33->setText("PAT ID = " + QString::number(patient_id));
+    msg33->show();
+
+
+
+    vis_rep->add_visit(visit{dateTime, doctor_id, patient_id, le_cost_->text().toInt()});
+
+
+    QMessageBox* msg9 = new QMessageBox();
+    msg9->setText("NEW ROW IN VISIT TABLE ADDED SUCCESSFULLY");
+    msg9->show();
 }
 
 // UPDATE VISIT -----------------------------------------------------------------
@@ -120,15 +144,99 @@ void panel_visit::delete_visit()
     info->show();
 }
 
-// GET VISIT -------------------------------------------------------------------
+// GET DOCTOR ID ----------------------------------------------------------------
+int panel_visit::get_doctor_id(const QString &d)
+{
+    QStringList elements = d.split(QRegularExpression {" "}); // ERROR Vector out of range!!!!
+
+    std::string str = d.toStdString();
+    std::stringstream ss;
+    ss.str(str);
+    std::vector<std::string> v;
+    std::string temp;
+
+    while(std::getline(ss, temp, ' '))
+    {
+        v.emplace_back(temp);
+    }
+
+    QString name;
+    QString surname;
+    QString spec;
+    for(int i = 0; i < v.size(); ++i)
+    {
+        name = QString::fromStdString(v[0]);
+        surname = QString::fromStdString(v[1]);
+        spec = QString::fromStdString(v[2]);
+    }
+
+    QMessageBox* msg1 = new QMessageBox();
+    msg1->setText(name + " " + surname + " " + spec);
+    msg1->show();
+
+    boost::optional<doctor> op_vis = doc_rep->get_doctor_id_by_name_surname_spec(name, surname, spec);
+    //return op_vis.get().get_id();
+
+
+    if (op_vis) {
+       QMessageBox* info = new QMessageBox();
+        info->setText(QString::number(op_vis.get().get_id()));
+        //info->setText(elements[0] + " " + QString::number(elements.size()));
+        //info->setText(QString::number(doc.get_id()));
+        info->show();
+        le_doctor_id_->setCurrentText(QString::number(op_vis.get().get_id()));
+        return op_vis.get().get_id();
+    }
+    return 0;
+
+}
+
+// GET PATIENT ID ----------------------------------------------------------------
+int panel_visit::get_patient_id(const QString &p)
+{
+    std::string str = p.toStdString();
+    std::stringstream ss;
+    ss.str(str);
+    std::vector<std::string> v;
+    std::string temp;
+
+    while(std::getline(ss, temp, ' '))
+    {
+        v.emplace_back(temp);
+    }
+
+    QString first_name;
+    QString last_name;
+    QString age;
+
+    for(int i = 0; i < v.size(); ++i)
+    {
+        first_name = QString::fromStdString(v[0]);
+        last_name = QString::fromStdString(v[1]);
+        age = QString::fromStdString(v[2]);
+    }
+    int age_num = age.toInt();
+    boost::optional<patient> op_vis = pat_rep->get_patient_id_by_name_surname_age(first_name, last_name, age_num);
+
+    if (op_vis)
+    {
+        /*QMessageBox* info = new QMessageBox();
+        //info->setText(QString::number(op_vis.get().get_id()));
+        info->setText(QString::number(age_num));
+        info->show();   */
+        le_patient_id_->setCurrentText(QString::number(op_vis.get().get_id()));
+        return op_vis.get().get_id();
+    }
+    return 0;
+}
+
+// GET VISIT ---------------------------------------------------------------------
 void panel_visit::get_visit(const QString &idx)
 {
     boost::optional<visit> op_vis = vis_rep->find_one_visit_by_id(idx.toInt());
 
-
     doctor_repository doc_rep;
     patient_repository pat_rep;
-
 
     if(op_vis)
     {
@@ -149,6 +257,8 @@ void panel_visit::get_visit(const QString &idx)
     }
 }
 
+
+
 // REFRESH OUTPUT -------------------------------------------------------------
 void panel_visit::refresh_data()
 {
@@ -162,8 +272,8 @@ void panel_visit::refresh_doc_id()
     QVector<doctor> doctors = doc_rep->find_all_doctors();
     for (const auto& d : doctors)
     {
-        le_doctor_id_->addItem(QString::number(d.get_id()));
-        //le_doctor_id_->addItem(d.get_name() + " " + d.get_surname());
+        // le_doctor_id_->addItem(QString::number(d.get_id()));
+        le_doctor_id_->addItem(d.get_name() + " " + d.get_surname() + " " + d.get_specialization());
     }
 }
 
@@ -173,8 +283,8 @@ void panel_visit::refresh_pat_id()
     QVector<patient> patients = pat_rep->find_all_patients();
     for (const auto& p : patients)
     {
-        le_patient_id_->addItem(QString::number(p.get_id()));
-        //le_patient_id_->addItem(p.get_first_name() + " " + p.get_last_name());
+        //le_patient_id_->addItem(QString::number(p.get_id()));
+        le_patient_id_->addItem(p.get_first_name() + " " + p.get_last_name() + " " + QString::number(p.get_age()));
     }
 }
 

@@ -124,3 +124,58 @@ boost::optional<patient> patient_repository::find_one_patient_by_id(const int id
     return boost::optional<patient>();
 }
 
+// GET PATIENT ID BY NAME, SURNAME, AGE -----------------------------------------------
+
+boost::optional<patient> patient_repository::get_patient_id_by_name_surname_age(const QString &first_name, const QString &last_name, const int age/*, const QString& sympt, const QString& diag*/)
+{
+        //QString sql = "select id, first_name, last_name, age, symptoms, diagnose from patient where first_name = :first_name and last_name = :last_name and age = :age and symptoms = :symptoms and diagnose = :diagnose";
+        QString sql = "select id, first_name, last_name, age from patient where first_name = :first_name and last_name = :last_name and age = :age";
+        QSqlQuery query;
+        query.prepare(sql);
+        query.bindValue(":first_name", first_name);
+        query.bindValue(":last_name", last_name);
+        query.bindValue(":age", age);
+        //query.bindValue(":symptoms", sympt);
+        //query.bindValue(":diagnose", diag);
+
+        if(query.exec())
+        {
+            if(query.next())
+            {
+                return boost::optional<patient>{
+                patient{
+                query.value(0).toInt(),
+                query.value(1).toString(),
+                query.value(2).toString(),
+                query.value(3).toInt()
+                }};
+            }
+        }
+        else
+        {
+            qDebug() << "Error while selecting one patient from table\n";
+        }
+        return boost::optional<patient>{};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

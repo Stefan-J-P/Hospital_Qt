@@ -31,6 +31,8 @@ panel_table_visit_by_date::panel_table_visit_by_date(QWidget *parent)
 
     setLayout(main_layout_);
 
+
+
     connect(calendar_1_, SIGNAL(clicked(QDate)), this, SLOT(show_date(QDate)));
     connect(calendar_2_, SIGNAL(clicked(QDate)), this, SLOT(show_date(QDate)));
     connect(show_visits_, SIGNAL(clicked(bool)), this, SLOT(show_visits_between_dates()));
@@ -44,7 +46,7 @@ bool panel_table_visit_by_date::is_date_correct(const visits_by_date &vis, const
 }
 
 
-// FILL TABLE ------ NO arguments --------------------------------------------------------------
+//FILL TABLE ------ NO arguments --------------------------------------------------------------
 /*
 void panel_table_visit_by_date::fill_table()
 {
@@ -107,6 +109,9 @@ void panel_table_visit_by_date::fill_table(const QDateTime& date_from, const QDa
         msg->show();
         return;
     }
+
+    table_->setRowCount(data_filter.size());
+
 
     doctor_repository doc_rep;
     patient_repository pat_rep;

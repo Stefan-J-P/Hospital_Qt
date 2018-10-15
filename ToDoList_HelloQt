@@ -22,8 +22,7 @@ TO DO:
 ----------------------------------------------------------------------------
 
 panel_table_visit_by_date:
-- konstruktor, wiersze tabeli zamiast 5 ma być data.size();
-- rozmiar tabeli tj liczba wierszy
+- ponowne wybieranie dat
 
 panel_visit:
 - wyświetlanie imion i nazwisk obok doctor_id oraz patient_id
